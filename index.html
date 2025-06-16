@@ -121,6 +121,34 @@
             margin-bottom: 20px;
             color: var(--accent-color);
         }
+
+        .user-balance {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .username {
+            font-weight: bold;
+            color: #2196F3;
+        }
+
+        .points {
+            color: #4CAF50;
+        }
+
+        .error {
+            color: #f44336;
+            padding: 10px;
+            text-align: center;
+            background: rgba(244, 67, 54, 0.1);
+            border-radius: 5px;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -180,6 +208,24 @@
         </div>
     </section>
 
+    <!-- Секция Интерактив -->
+    <section id="interactive" class="section">
+        <div class="container">
+            <h2>Интерактив</h2>
+            <div class="section-content">
+                <p>Участвуйте в викторинах и получайте лапабаллы!</p>
+                
+                <!-- Таблица лапабаллов -->
+                <div class="lapaballs-section">
+                    <h3>Таблица лапабаллов</h3>
+                    <div id="balance" class="balance-container">
+                        <!-- Здесь будут отображаться лапабаллы -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container text-center">
@@ -221,5 +267,41 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Константы для Google Sheets API
+    const SPREADSHEET_ID = '1Ko-vYZCrEybb7aQa46zhAzQIrhMYPSTVBLKIKJbiFYs';
+    const API_KEY = 'AIzaSyA2Yaa57UHCzq7MKpZEhpIrQgC_h0oh06I';
+
+    // Функция для получения данных из Google Sheets
+    async function fetchLapaballs() {
+        try {
+            const response = await fetch(
+                `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Баллы!A:B?key=${API_KEY}`
+            );
+            const data = await response.json();
+            
+            if (data.values) {
+                // Пропускаем заголовок
+                const users = data.values.slice(1);
+                
+                // Формируем HTML
+                const balanceElement = document.getElementById('balance');
+                balanceElement.innerHTML = users.map(user => 
+                    `<div class="user-balance">
+                        <span class="username">${user[0]}</span>
+                        <span class="points">${user[1]} лапабаллов</span>
+                    </div>`
+                ).join('');
+            }
+        } catch (error) {
+            console.error('Ошибка при получении данных:', error);
+            document.getElementById('balance').innerHTML = 
+                '<div class="error">Ошибка при загрузке данных</div>';
+        }
+    }
+
+    // Загружаем данные при загрузке страницы
+    document.addEventListener('DOMContentLoaded', fetchLapaballs);
+    </script>
 </body>
 </html> 
