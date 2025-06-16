@@ -26,6 +26,19 @@
             color: white;
             padding: 100px 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>') center/cover;
+            opacity: 0.1;
         }
 
         .feature-card {
@@ -35,6 +48,7 @@
             margin: 20px 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .feature-card:hover {
@@ -57,6 +71,7 @@
             transition: all 0.3s ease;
             margin: 10px;
             display: inline-block;
+            border: none;
         }
 
         .cta-button:hover {
@@ -70,6 +85,17 @@
             color: white;
             padding: 50px 0;
             margin-top: 50px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
         }
 
         .social-links a {
@@ -95,41 +121,41 @@
             margin: 15px 0;
             padding: 10px;
             border-left: 3px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .coming-soon-modal .modal-content {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        .bot-feature-item:hover {
+            background: rgba(108, 92, 231, 0.1);
+            transform: translateX(5px);
+        }
+
+        .version-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
             color: white;
-            border-radius: 20px;
-            border: none;
-        }
-
-        .coming-soon-modal .modal-header {
-            border-bottom: none;
-        }
-
-        .coming-soon-modal .modal-footer {
-            border-top: none;
-        }
-
-        .coming-soon-modal .btn-close {
-            filter: brightness(0) invert(1);
-        }
-
-        .coming-soon-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            color: var(--accent-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            z-index: 1000;
         }
 
         .user-balance {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
+            padding: 15px;
             border-bottom: 1px solid #eee;
             margin: 5px 0;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .user-balance:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
         }
 
         .username {
@@ -139,6 +165,7 @@
 
         .points {
             color: #4CAF50;
+            font-weight: bold;
         }
 
         .error {
@@ -148,6 +175,23 @@
             background: rgba(244, 67, 54, 0.1);
             border-radius: 5px;
             margin: 10px 0;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
         }
     </style>
 </head>
@@ -173,33 +217,33 @@
 
     <!-- Bot Features Section -->
     <section class="container my-5">
-        <h2 class="text-center mb-5">Функционал Лапабота</h2>
+        <h2 class="text-center section-title">Функционал Лапабота</h2>
         <div class="bot-features">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="bot-feature-item">
+                    <div class="bot-feature-item" onclick="showFeatureInfo('project')">
                         <h4><i class="fas fa-search"></i> Подбор проекта</h4>
                         <p>Поможем выбрать идеальный квест под ваши предпочтения</p>
                     </div>
-                    <div class="bot-feature-item">
+                    <div class="bot-feature-item" onclick="showFeatureInfo('info')">
                         <h4><i class="fas fa-info-circle"></i> Базовая информация</h4>
                         <p>Всё, что нужно знать новичкам о квестах</p>
                     </div>
-                    <div class="bot-feature-item">
+                    <div class="bot-feature-item" onclick="showFeatureInfo('tips')">
                         <h4><i class="fas fa-star"></i> Продвинутые советы</h4>
                         <p>Секреты и рекомендации для опытных игроков</p>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="bot-feature-item">
+                    <div class="bot-feature-item" onclick="showFeatureInfo('team')">
                         <h4><i class="fas fa-users"></i> Поиск команды</h4>
                         <p>Поможем найти единомышленников</p>
                     </div>
-                    <div class="bot-feature-item">
+                    <div class="bot-feature-item" onclick="showFeatureInfo('booking')">
                         <h4><i class="fas fa-calendar-alt"></i> Бронирование</h4>
                         <p>Информация о способах бронирования</p>
                     </div>
-                    <div class="bot-feature-item">
+                    <div class="bot-feature-item" onclick="showFeatureInfo('genres')">
                         <h4><i class="fas fa-book"></i> Жанры квестов</h4>
                         <p>Подробная информация о различных жанрах</p>
                     </div>
@@ -211,13 +255,13 @@
     <!-- Секция Интерактив -->
     <section id="interactive" class="section">
         <div class="container">
-            <h2>Интерактив</h2>
+            <h2 class="text-center section-title">Интерактив</h2>
             <div class="section-content">
-                <p>Участвуйте в викторинах и получайте лапабаллы!</p>
+                <p class="text-center lead">Участвуйте в викторинах и получайте лапабаллы!</p>
                 
                 <!-- Таблица лапабаллов -->
                 <div class="lapaballs-section">
-                    <h3>Таблица лапабаллов</h3>
+                    <h3 class="text-center mb-4">Таблица лапабаллов</h3>
                     <div id="balance" class="balance-container">
                         <!-- Здесь будут отображаться лапабаллы -->
                     </div>
@@ -235,12 +279,17 @@
                 <a href="https://t.me/lapacha1"><i class="fas fa-comments"></i></a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#comingSoonModal"><i class="fas fa-robot"></i></a>
             </div>
-            <p>© 2024 Лапули. Все права защищены.</p>
+            <p>© 2025 Лапули. Все права защищены.</p>
             <a href="admin.html" class="text-white" style="text-decoration: none;">
                 <small>Админ-панель</small>
             </a>
         </div>
     </footer>
+
+    <!-- Version Badge -->
+    <div class="version-badge">
+        v1.0.0
+    </div>
 
     <!-- Coming Soon Modal -->
     <div class="modal fade coming-soon-modal" id="comingSoonModal" tabindex="-1" aria-labelledby="comingSoonModalLabel" aria-hidden="true">
@@ -261,6 +310,20 @@
                     <a href="https://t.me/lapuliquest" class="cta-button">
                         <i class="fab fa-telegram"></i> Перейти в канал
                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Info Modal -->
+    <div class="modal fade" id="featureInfoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="featureTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="featureContent">
                 </div>
             </div>
         </div>
@@ -298,6 +361,44 @@
             document.getElementById('balance').innerHTML = 
                 '<div class="error">Ошибка при загрузке данных</div>';
         }
+    }
+
+    // Функция для показа информации о функциях
+    function showFeatureInfo(feature) {
+        const modal = new bootstrap.Modal(document.getElementById('featureInfoModal'));
+        const title = document.getElementById('featureTitle');
+        const content = document.getElementById('featureContent');
+        
+        const features = {
+            project: {
+                title: 'Подбор проекта',
+                content: 'Наш бот поможет вам выбрать идеальный квест, учитывая ваши предпочтения, опыт и состав команды. Просто ответьте на несколько вопросов, и мы подберем для вас лучшие варианты!'
+            },
+            info: {
+                title: 'Базовая информация',
+                content: 'Узнайте всё необходимое о квестах: как они работают, что нужно знать новичкам, как подготовиться к игре и многое другое.'
+            },
+            tips: {
+                title: 'Продвинутые советы',
+                content: 'Секретные техники, стратегии и лайфхаки для опытных игроков. Улучшите свои навыки и станьте настоящим мастером квестов!'
+            },
+            team: {
+                title: 'Поиск команды',
+                content: 'Найдите единомышленников для прохождения квестов. Создавайте команды, присоединяйтесь к существующим группам и находите новых друзей!'
+            },
+            booking: {
+                title: 'Бронирование',
+                content: 'Узнайте о различных способах бронирования квестов, специальных предложениях и скидках для наших пользователей.'
+            },
+            genres: {
+                title: 'Жанры квестов',
+                content: 'Погрузитесь в мир различных жанров квестов: от детективных историй до фэнтези-приключений. Узнайте особенности каждого жанра и выберите то, что вам по душе!'
+            }
+        };
+
+        title.textContent = features[feature].title;
+        content.textContent = features[feature].content;
+        modal.show();
     }
 
     // Загружаем данные при загрузке страницы
