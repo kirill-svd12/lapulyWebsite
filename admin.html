@@ -35,22 +35,6 @@
             padding: 20px;
         }
 
-        .stats-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .users-table {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
         .broadcast-form {
             background: white;
             border-radius: 15px;
@@ -69,25 +53,30 @@
             border-color: var(--secondary-color);
         }
 
-        .nav-tabs .nav-link.active {
-            color: var(--primary-color);
-            border-color: var(--primary-color);
+        .user-balance {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
         }
 
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
+        .username {
+            font-weight: bold;
+            color: #2196F3;
+        }
+
+        .points {
+            color: #4CAF50;
+        }
+
+        .error {
+            color: #f44336;
+            padding: 10px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- Кнопка возврата на главную -->
-    <a href="index.html" class="btn btn-primary back-button">
-        <i class="fas fa-arrow-left"></i> На главную
-    </a>
-
     <!-- Форма входа -->
     <div class="login-container" id="loginForm">
         <h2 class="text-center mb-4">Вход в админ-панель</h2>
@@ -109,101 +98,64 @@
         <div class="container">
             <h2 class="mb-4">Админ-панель Лапули</h2>
             
-            <!-- Статистика -->
-            <div class="stats-card">
-                <h3>Статистика</h3>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Всего пользователей</h5>
-                                <p class="card-text" id="totalUsers">0</p>
-                            </div>
-                        </div>
+            <!-- Форма рассылки -->
+            <div class="broadcast-form">
+                <h3>Отправить рассылку</h3>
+                <form onsubmit="return handleBroadcast(event)">
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="message" rows="5" required></textarea>
                     </div>
-                </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
             </div>
 
-            <!-- Навигация -->
-            <ul class="nav nav-tabs" id="adminTabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="users-tab" data-bs-toggle="tab" href="#users" role="tab">Пользователи</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="broadcast-tab" data-bs-toggle="tab" href="#broadcast" role="tab">Рассылка</a>
-                </li>
-            </ul>
-
-            <!-- Содержимое вкладок -->
-            <div class="tab-content" id="adminTabContent">
-                <!-- Список пользователей -->
-                <div class="tab-pane fade show active" id="users" role="tabpanel">
-                    <div class="users-table">
-                        <h3>Список пользователей</h3>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Имя пользователя</th>
-                                        <th>Имя</th>
-                                        <th>Дата регистрации</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="usersList">
-                                </tbody>
-                            </table>
+            <!-- Управление лапабаллами -->
+            <div class="broadcast-form">
+                <h3>Управление лапабаллами</h3>
+                <div class="table-responsive mb-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Лапабаллы</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lapaballsList">
+                        </tbody>
+                    </table>
+                </div>
+                <form onsubmit="return handleAddUser(event)" class="mb-3">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" id="newUserName" placeholder="Имя пользователя" required>
+                        </div>
+                        <div class="col">
+                            <input type="number" class="form-control" id="newUserLapaballs" placeholder="Количество лапабаллов" required>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Добавить</button>
                         </div>
                     </div>
-                </div>
-
-                <!-- Форма рассылки -->
-                <div class="tab-pane fade" id="broadcast" role="tabpanel">
-                    <div class="broadcast-form">
-                        <h3>Отправить рассылку</h3>
-                        <form onsubmit="return handleBroadcast(event)">
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Сообщение</label>
-                                <textarea class="form-control" id="message" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Отправить</button>
-                        </form>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Данные администраторов
-        const ADMIN_CREDENTIALS = {
-            "lapuly_admin": "lapuly2024!",
-            "quest_master": "quest2024!",
-            "bot_operator": "operator2024!"
-        };
+        // Конфигурация API
+        const API_URL = 'https://api.lapuly.ru'; // Замените на ваш реальный URL API
+        const BOT_TOKEN = 'YOUR_BOT_TOKEN'; // Замените на ваш токен бота
 
-        // Данные пользователей (для демонстрации)
-        const DEMO_USERS = [
-            {
-                user_id: 1,
-                username: "user1",
-                first_name: "Иван",
-                join_date: "2024-01-01"
-            },
-            {
-                user_id: 2,
-                username: "user2",
-                first_name: "Мария",
-                join_date: "2024-01-02"
-            },
-            {
-                user_id: 3,
-                username: "user3",
-                first_name: "Алексей",
-                join_date: "2024-01-03"
-            }
-        ];
+        // Данные администраторов (зашифрованные)
+        const ADMIN_CREDENTIALS = {
+            "lapuly_admin": btoa("lapuly2024!"),
+            "quest_master": btoa("quest2024!"),
+            "bot_operator": btoa("operator2024!"),
+            "lapuly_quest": btoa("lapuly2024!")
+        };
 
         // Обработка входа
         function handleLogin(event) {
@@ -211,44 +163,176 @@
             const login = document.getElementById('login').value;
             const password = document.getElementById('password').value;
 
-            if (ADMIN_CREDENTIALS[login] === password) {
+            if (ADMIN_CREDENTIALS[login] === btoa(password)) {
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
-                loadUsers();
+                loadLapaballs();
             } else {
                 alert('Неверный логин или пароль');
             }
             return false;
         }
 
-        // Загрузка списка пользователей
-        function loadUsers() {
-            // В реальном приложении здесь был бы запрос к API
-            document.getElementById('totalUsers').textContent = DEMO_USERS.length;
-            const usersList = document.getElementById('usersList');
-            usersList.innerHTML = '';
-            DEMO_USERS.forEach(user => {
-                usersList.innerHTML += `
-                    <tr>
-                        <td>${user.user_id}</td>
-                        <td>${user.username || '-'}</td>
-                        <td>${user.first_name || '-'}</td>
-                        <td>${user.join_date}</td>
-                    </tr>
-                `;
-            });
-        }
-
         // Обработка рассылки
-        function handleBroadcast(event) {
+        async function handleBroadcast(event) {
             event.preventDefault();
             const message = document.getElementById('message').value;
             
-            // В реальном приложении здесь был бы запрос к API
-            alert('В реальном приложении здесь будет отправка сообщений через бота');
-            document.getElementById('message').value = '';
+            try {
+                const response = await fetch(`${API_URL}/broadcast`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${BOT_TOKEN}`
+                    },
+                    body: JSON.stringify({
+                        message: btoa(message) // Шифруем сообщение
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Ошибка отправки рассылки');
+                }
+
+                alert('Рассылка успешно отправлена');
+                document.getElementById('message').value = '';
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка отправки рассылки');
+            }
+            
             return false;
         }
+
+        // Загрузка списка лапабаллов
+        async function loadLapaballs() {
+            try {
+                const response = await fetch(`${API_URL}/lapaballs`, {
+                    headers: {
+                        'Authorization': `Bearer ${BOT_TOKEN}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка загрузки данных');
+                }
+
+                const data = await response.json();
+                const lapaballsList = document.getElementById('lapaballsList');
+                lapaballsList.innerHTML = '';
+                
+                data.forEach(user => {
+                    lapaballsList.innerHTML += `
+                        <tr>
+                            <td>${user.name}</td>
+                            <td>${user.lapaballs}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="editLapaballs('${user.name}', ${user.lapaballs})">
+                                    Изменить
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка загрузки данных');
+            }
+        }
+
+        // Добавление нового пользователя
+        async function handleAddUser(event) {
+            event.preventDefault();
+            const name = document.getElementById('newUserName').value;
+            const lapaballs = parseInt(document.getElementById('newUserLapaballs').value);
+            
+            try {
+                const response = await fetch(`${API_URL}/lapaballs/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${BOT_TOKEN}`
+                    },
+                    body: JSON.stringify({ name, lapaballs })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Ошибка добавления пользователя');
+                }
+
+                alert('Пользователь успешно добавлен');
+                document.getElementById('newUserName').value = '';
+                document.getElementById('newUserLapaballs').value = '';
+                loadLapaballs();
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка добавления пользователя');
+            }
+            
+            return false;
+        }
+
+        // Редактирование лапабаллов
+        async function editLapaballs(name, currentValue) {
+            const newValue = prompt(`Введите новое количество лапабаллов для ${name}:`, currentValue);
+            if (newValue === null) return; // Пользователь отменил
+
+            try {
+                const response = await fetch(`${API_URL}/lapaballs/update`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${BOT_TOKEN}`
+                    },
+                    body: JSON.stringify({ name, lapaballs: parseInt(newValue) })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Ошибка обновления лапабаллов');
+                }
+
+                alert('Лапабаллы успешно обновлены');
+                loadLapaballs();
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка обновления лапабаллов');
+            }
+        }
+
+        // Константы для Google Sheets API
+        const SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms';
+        const API_KEY = 'AIzaSyBme5mYvnoYQuwbjpRrRj1d9k2CbW8qVlU';
+
+        // Функция для получения данных из Google Sheets
+        async function fetchLapaballs() {
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Баллы!A:B?key=${API_KEY}`
+                );
+                const data = await response.json();
+                
+                if (data.values) {
+                    // Пропускаем заголовок
+                    const users = data.values.slice(1);
+                    
+                    // Формируем HTML
+                    const balanceElement = document.getElementById('balance');
+                    balanceElement.innerHTML = users.map(user => 
+                        `<div class="user-balance">
+                            <span class="username">${user[0]}</span>
+                            <span class="points">${user[1]} лапабаллов</span>
+                        </div>`
+                    ).join('');
+                }
+            } catch (error) {
+                console.error('Ошибка при получении данных:', error);
+                document.getElementById('balance').innerHTML = 
+                    '<div class="error">Ошибка при загрузке данных</div>';
+            }
+        }
+
+        // Загружаем данные при загрузке страницы
+        document.addEventListener('DOMContentLoaded', fetchLapaballs);
     </script>
 </body>
 </html> 
