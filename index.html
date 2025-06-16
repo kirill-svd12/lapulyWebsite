@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лапули | Квестовая команда</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --accent-color: #fd79a8;
+            --text-color: #2d3436;
+            --light-bg: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: #e84393;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 50px 0;
+            margin-top: 50px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .bot-features {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .bot-feature-item {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .coming-soon-modal .modal-content {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 20px;
+            border: none;
+        }
+
+        .coming-soon-modal .modal-header {
+            border-bottom: none;
+        }
+
+        .coming-soon-modal .modal-footer {
+            border-top: none;
+        }
+
+        .coming-soon-modal .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .coming-soon-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="display-4 mb-4">Лапули</h1>
+            <p class="lead mb-5">Квестовая команда, которая хочет, чтобы их узнавали на ФОПе 🖤</p>
+            <div>
+                <a href="https://t.me/lapuliquest" class="cta-button">
+                    <i class="fab fa-telegram"></i> Основной канал
+                </a>
+                <a href="#" class="cta-button" data-bs-toggle="modal" data-bs-target="#comingSoonModal">
+                    <i class="fab fa-telegram"></i> Лапабот
+                </a>
+                <a href="https://t.me/lapacha1" class="cta-button">
+                    <i class="fab fa-telegram"></i> Наш уютный чат
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bot Features Section -->
+    <section class="container my-5">
+        <h2 class="text-center mb-5">Функционал Лапабота</h2>
+        <div class="bot-features">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="bot-feature-item">
+                        <h4><i class="fas fa-search"></i> Подбор проекта</h4>
+                        <p>Поможем выбрать идеальный квест под ваши предпочтения</p>
+                    </div>
+                    <div class="bot-feature-item">
+                        <h4><i class="fas fa-info-circle"></i> Базовая информация</h4>
+                        <p>Всё, что нужно знать новичкам о квестах</p>
+                    </div>
+                    <div class="bot-feature-item">
+                        <h4><i class="fas fa-star"></i> Продвинутые советы</h4>
+                        <p>Секреты и рекомендации для опытных игроков</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bot-feature-item">
+                        <h4><i class="fas fa-users"></i> Поиск команды</h4>
+                        <p>Поможем найти единомышленников</p>
+                    </div>
+                    <div class="bot-feature-item">
+                        <h4><i class="fas fa-calendar-alt"></i> Бронирование</h4>
+                        <p>Информация о способах бронирования</p>
+                    </div>
+                    <div class="bot-feature-item">
+                        <h4><i class="fas fa-book"></i> Жанры квестов</h4>
+                        <p>Подробная информация о различных жанрах</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <h4>Присоединяйтесь к нам</h4>
+            <div class="social-links my-4">
+                <a href="https://t.me/lapuliquest"><i class="fab fa-telegram"></i></a>
+                <a href="https://t.me/lapacha1"><i class="fas fa-comments"></i></a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#comingSoonModal"><i class="fas fa-robot"></i></a>
+            </div>
+            <p>© 2024 Лапули. Все права защищены.</p>
+            <a href="admin.html" class="text-white" style="text-decoration: none;">
+                <small>Админ-панель</small>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Coming Soon Modal -->
+    <div class="modal fade coming-soon-modal" id="comingSoonModal" tabindex="-1" aria-labelledby="comingSoonModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="coming-soon-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2 class="mb-4">Скоро!</h2>
+                    <p class="lead">Лапабот находится в разработке и скоро будет доступен.</p>
+                    <p>Следите за обновлениями в нашем канале!</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <a href="https://t.me/lapuliquest" class="cta-button">
+                        <i class="fab fa-telegram"></i> Перейти в канал
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
